@@ -26,7 +26,7 @@
         <div class="page-title mb-5">
             <div class="row">
                 <div class="col-12 col-md-12 order-md-1 order-last">
-                    <a href="{{ url('report/pos') }}">
+                    <a href="{{ url('pos/report') }}">
                         <h5> <i class="fa fa-arrow-left"></i> Kembali </h5>
                     </a>
                 </div>

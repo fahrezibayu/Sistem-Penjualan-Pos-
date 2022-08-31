@@ -31,9 +31,18 @@ class DashboardController extends Controller
             $category = Category::count();
             $merchandise = Merchandise::count();
             $users       = User::count();
-            $pos         = Pos_U::select(DB::raw("SUM(total) as pendapatan"))->whereYear('created_at', '=', $year)->whereMonth('created_at', '=', $month)->first();
-
-            return view('v_dashboard', compact("category", "merchandise", "users", "pos"));
+            $pos         = Pos_U::select(DB::raw("SUM(total) as pendapatan"))->whereYear('tgl_transaksi', '=', $year)->whereMonth('tgl_transaksi', '=', $month)->first();
+            $leadership = DB::table('tbl_barang')
+            ->join('tbl_penjualan_trn', 'tbl_penjualan_trn.id_barang', '=', 'tbl_barang.id_barang')
+            ->join('tbl_penjualan', 'tbl_penjualan_trn.id_penjualan', '=', 'tbl_penjualan.id_penjualan')
+            ->whereMonth('tbl_penjualan.tgl_transaksi', '=', date('m'))
+            ->whereYear('tbl_penjualan.tgl_transaksi', '=', date('Y'))
+            ->select(DB::raw('COUNT(tbl_penjualan_trn.id_barang) as total_penjualan,tbl_barang.nama_barang,tbl_barang.foto,row_number() OVER (ORDER BY total_penjualan DESC) number'))
+            ->groupBy('tbl_penjualan_trn.id_barang')
+            ->orderBy('number', 'ASC')
+            ->take(3)
+            ->get();
+            return view('v_dashboard', compact("category", "merchandise", "users", "pos","leadership"));
         }
     }
 
@@ -49,9 +58,18 @@ class DashboardController extends Controller
             $category = Category::count();
             $merchandise = Merchandise::count();
             $users       = User::count();
-            $pos         = Pos_U::select(DB::raw("SUM(total) as pendapatan"))->whereYear('created_at', '=', $year)->whereMonth('created_at', '=', $month)->first();
-
-            return view('v_dashboard', compact("category", "merchandise", "users", "pos"));
+            $pos         = Pos_U::select(DB::raw("SUM(total) as pendapatan"))->whereYear('tgl_transaksi', '=', $year)->whereMonth('tgl_transaksi', '=', $month)->first();
+            $leadership = DB::table('tbl_barang')
+            ->join('tbl_penjualan_trn', 'tbl_penjualan_trn.id_barang', '=', 'tbl_barang.id_barang')
+            ->join('tbl_penjualan', 'tbl_penjualan_trn.id_penjualan', '=', 'tbl_penjualan.id_penjualan')
+            ->whereMonth('tbl_penjualan.tgl_transaksi', '=', $month)
+            ->whereYear('tbl_penjualan.tgl_transaksi', '=', $year)
+            ->select(DB::raw('COUNT(tbl_penjualan_trn.id_barang) as total_penjualan,tbl_barang.nama_barang,tbl_barang.foto,row_number() OVER (ORDER BY total_penjualan DESC) number'))
+            ->groupBy('tbl_penjualan_trn.id_barang')
+            ->orderBy('number', 'ASC')
+            ->take(3)
+            ->get();
+            return view('v_dashboard', compact("category", "merchandise", "users", "pos","leadership"));
         }
     }
 

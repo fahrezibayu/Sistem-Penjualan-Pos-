@@ -133,28 +133,11 @@ class PosController extends Controller
 
             return redirect("/");
         } else {
-            $pos        = Pos_U::with("tb_user")->whereYear('created_at', '=', $year)->whereMonth('created_at', '=', $month)->get();
-            $tunai      = Pos_U::select(DB::raw("SUM(total) as pendapatan"))->whereYear('created_at', '=', $year)->whereMonth('created_at', '=', $month)->where('jenis_pembayaran', '=', 'Tunai')->first();
-            $nontunai   = Pos_U::select(DB::raw("SUM(total) as pendapatan"))->whereYear('created_at', '=', $year)->whereMonth('created_at', '=', $month)->where('jenis_pembayaran', '=', 'Non Tunai')->first();
-            $all        = Pos_U::select(DB::raw("SUM(total) as pendapatan"))->whereYear('created_at', '=', $year)->whereMonth('created_at', '=', $month)->first();
-            return view('report.v_report_pos', compact("pos", "tunai", "nontunai", "all"));
-        }
-    }
-
-    public function report_search(Request $request)
-    {
-
-        $date1      = date('Y-m-d', strtotime($request->date1));
-        $date2      = date('Y-m-d', strtotime($request->date2));
-        if (!Session::get('login')) {
-
-            return redirect("/");
-        } else {
-            $pos        = Pos_U::with("tb_user")->whereBetween('tgl_transaksi', [$date1, $date2])->get();
-            $tunai      = Pos_U::select(DB::raw("SUM(total) as pendapatan"))->whereBetween('tgl_transaksi', [$date1, $date2])->where('jenis_pembayaran', '=', 'Tunai')->first();
-            $nontunai   = Pos_U::select(DB::raw("SUM(total) as pendapatan"))->whereBetween('tgl_transaksi', [$date1, $date2])->where('jenis_pembayaran', '=', 'Non Tunai')->first();
-            $all        = Pos_U::select(DB::raw("SUM(total) as pendapatan"))->whereBetween('tgl_transaksi', [$date1, $date2])->first();
-            return view('report.v_report_pos', compact("pos", "tunai", "nontunai", "all"));
+            $pos        = Pos_U::with("tb_user")->whereYear('tgl_transaksi', '=', $year)->whereMonth('tgl_transaksi', '=', $month)->get();
+            $tunai      = Pos_U::select(DB::raw("SUM(total) as pendapatan"))->whereYear('tgl_transaksi', '=', $year)->whereMonth('tgl_transaksi', '=', $month)->where('jenis_pembayaran', '=', 'Tunai')->first();
+            $nontunai   = Pos_U::select(DB::raw("SUM(total) as pendapatan"))->whereYear('tgl_transaksi', '=', $year)->whereMonth('tgl_transaksi', '=', $month)->where('jenis_pembayaran', '=', 'Non Tunai')->first();
+            $all        = Pos_U::select(DB::raw("SUM(total) as pendapatan"))->whereYear('tgl_transaksi', '=', $year)->whereMonth('tgl_transaksi', '=', $month)->first();
+            return view('report.v_report_pos_2', compact("pos", "tunai", "nontunai", "all"));
         }
     }
 
@@ -166,16 +149,14 @@ class PosController extends Controller
         $detail_penjualan =
             DB::table('tbl_penjualan_trn')
             ->join('tbl_barang', 'tbl_barang.id_barang', '=', 'tbl_penjualan_trn.id_barang')
-            ->join('tbl_detail_promo', 'tbl_penjualan_trn.id_barang', '=', 'tbl_detail_promo.id_barang')
-            ->join('tbl_promo', 'tbl_promo.id_promo', '=', 'tbl_detail_promo.id_promo')
-            ->select(DB::raw('tbl_penjualan_trn.*,tbl_penjualan_trn.id_promo as promo_penjualan,tbl_barang.nama_barang,tbl_barang.id_barang,tbl_promo.*,tbl_detail_promo.*'))
+            ->select(DB::raw('tbl_penjualan_trn.*,tbl_barang.nama_barang,tbl_barang.id_barang'))
             ->where('tbl_penjualan_trn.id_penjualan', $id_penjualan)
             ->groupBy('tbl_barang.id_barang')
-            ->groupBy('tbl_detail_promo.id_promo')
             ->get();
         $struck = DB::table("tbl_struck")->first();
         $profile = DB::table("tbl_profile_app")->first();
 
         return view("report.v_detail_report_pos", compact("id_penjualan", "penjualan", "detail_penjualan", "struck", "profile"));
     }
+
 }

@@ -71,6 +71,15 @@ Route::middleware(['auth', 'cekrole:Admin'])->group(function () {
     Route::post("/setting/apps/update", "App\Http\Controllers\SettingController@update_apps");
     Route::post("/setting/struck/update", "App\Http\Controllers\SettingController@update_struck");
 
+    // todo report
+    Route::get("/report", "App\Http\Controllers\ReportController@index");
+    Route::get("/report/pos", "App\Http\Controllers\ReportController@lap_pos");
+    Route::post("/report/pos/search", "App\Http\Controllers\ReportController@search_pos");
+    Route::get("/report/pos/detail/{id}", "App\Http\Controllers\ReportController@detail_pos");
+    Route::get("/report/FastSlow", "App\Http\Controllers\ReportController@fast_slow");
+    Route::post("/report/FastSlow/search", "App\Http\Controllers\ReportController@search_fast_slow");
+    Route::get("/report/edc", "App\Http\Controllers\ReportController@edc");
+    Route::post("/report/edc/search", "App\Http\Controllers\ReportController@search_edc");
 });
 
 Route::middleware(['auth', 'cekrole:Kasir'])->group(function () {
@@ -81,11 +90,12 @@ Route::middleware(['auth', 'cekrole:Kasir'])->group(function () {
     Route::post("/pos/search_menu", "App\Http\Controllers\PosController@search_menu");
     Route::post("/pos/save", "App\Http\Controllers\PosController@save");
     Route::get("/pos/print/{id}", "App\Http\Controllers\PosController@struck");
-
-
+    // todo pos report
+    Route::get("/pos/report", "App\Http\Controllers\PosController@report");
+    Route::get("/pos/report/detail/{id}", "App\Http\Controllers\PosController@detail_report");
 });
 
-Route::middleware(['auth','cekrole:Admin,Kasir'])->group(function () {
+Route::middleware(['auth', 'cekrole:Admin,Kasir'])->group(function () {
 
     // todo profile user
     Route::get("/setting/profile/", "App\Http\Controllers\SettingController@profile");
@@ -97,9 +107,4 @@ Route::middleware(['auth','cekrole:Admin,Kasir'])->group(function () {
     Route::get("/promo/paket/data_detail_promo", "App\Http\Controllers\PromopaketController@detail_promo");
     // todo receipt
     Route::get("/print/receipt/{id}", "App\Http\Controllers\PosController@receipt");
-    // todo report
-    Route::get("/report/pos", "App\Http\Controllers\PosController@report");
-    Route::post("/report/pos/search", "App\Http\Controllers\PosController@report_search");
-    Route::get("/report/pos/detail/{id}", "App\Http\Controllers\PosController@detail_report");
-
 });

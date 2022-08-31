@@ -10,7 +10,7 @@
                 <h3>
                     @yield('title')
                 </h3>
-                <span class="text-muted"> Dibawah ini adalah data penjualan yang ditampilkan per-bulan. </span>
+                <span class="text-muted"> Dibawah ini adalah data penjualan yang ditampilkan per-hari. </span>
             </div>
         </div>
     </div>
@@ -44,28 +44,6 @@
     @endphp
     <div class="page-content">
         <section>
-            <form action="{{ url('report/pos/search') }}" method="post">
-                @csrf
-                <div class="row g-3">
-                    <div class="col-md-6 col-6">
-                        <label> Dari </label>
-                        <input type="text" name="date1" id="date" class="form-control">
-                    </div>
-                    <div class="col-md-6 col-6">
-                        <label> Hingga </label>
-                        <input type="text" name="date2" id="date2" class="form-control">
-                    </div>
-                    <div class="col-md-6 mb-4">
-                        <a href="{{ url('report') }}">
-                            <button class="btn btn-outline-primary btn-block" type="button"> <i
-                                    class="fa fa-arrow-left"></i> Kembali
-                            </button>
-                        </a>
-                    </div>
-                    <div class="col-md-6 mb-4">
-                        <button class="btn btn-primary btn-block" type="submit"> Tampilkan </button>
-                    </div>
-            </form>
             <div class="col-12 col-lg-4">
                 <div class="card">
                     <div class="card-body px-3 py-4-5">

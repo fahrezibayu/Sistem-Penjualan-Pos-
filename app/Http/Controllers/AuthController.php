@@ -46,14 +46,17 @@ class AuthController extends Controller
 
 
             Session::put("login",TRUE);
-
+            
             if (Auth::user()->role == 'Admin') {
                 return redirect('/dashboard');
             } else {
                 return redirect('/pos');
             }
 
-        }   return view("v_login");
+        } else {
+            Session::flash('gagal','Username / password anda mungkin salah.');
+            return view("v_login");
+        }
 
     }
 

@@ -33,7 +33,9 @@ $profile = DB::table('tbl_profile_app')->first();
                     <p class="auth-subtitle fs-5 mb-4">
                         {{ $profile->nama_aplikasi }}
                     </p>
-
+                    @if ($message = Session::get('gagal'))
+                    <div class="alert alert-light-danger color-danger alert-dismissible show fade"><i class="bi bi-exclamation-circle"></i> {{ $message }} </div>
+                    @endif
                     <form action="{{ url('/sign_in') }}" method="post" autocomplete="off">
                         @csrf
                         <div class="form-group position-relative has-icon-left mb-4">

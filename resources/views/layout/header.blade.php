@@ -13,7 +13,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item dropdown me-3">
+                    {{-- <li class="nav-item dropdown me-3">
                         <a class="nav-link active dropdown-toggle text-gray-600" href="#"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <i class='bi bi-bell bi-sub fs-4'></i>
@@ -24,7 +24,7 @@
                             </li>
                             <span class="notif_header"></span>
                         </ul>
-                    </li>
+                    </li> --}}
                 </ul>
                 <div class="dropdown">
                     <a href="#" data-bs-toggle="dropdown" aria-expanded="false">

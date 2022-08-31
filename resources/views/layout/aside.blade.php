@@ -55,7 +55,7 @@
                 <ul class="menu">
                     <li class="sidebar-title">Menu</li>
 
-                    <li class="sidebar-item {{ request()->is('dashboard') ? 'active' : '' }}">
+                    <li class="sidebar-item {{ request()->segment(1) == 'dashboard' ? 'active' : '' }}">
                         <a href="{{ url('/dashboard') }}" class='sidebar-link'>
                             <i class="bi bi-grid"></i>
                             <span>Dashboard</span>
@@ -85,7 +85,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="sidebar-item {{ request()->segment(1) == 'master' ? 'active' : '' }} has-sub">
+                    {{-- <li class="sidebar-item {{ request()->segment(1) == 'master' ? 'active' : '' }} has-sub">
                         <a href="#" class='sidebar-link'>
                             <i class="bi bi-gift"></i>
                             <span> Promo </span>
@@ -98,8 +98,13 @@
                                 <a href="{{ url('/promo/paket') }}"> Paket </a>
                             </li>
                         </ul>
+                    </li> --}}
+                    <li class="sidebar-item {{ request()->segment(2) == 'promo' ? 'active' : '' }}">
+                        <a href="{{ url('/promo/diskon') }}" class='sidebar-link'>
+                            <i class="bi bi-gift"></i>
+                            <span> Promo Diskon </span>
+                        </a>
                     </li>
-
                     <li class="sidebar-title"> Laporan </li>
 
                     {{-- <li class="sidebar-item {{ request()->segment(2) == 'pos' ? 'active' : '' }}">
@@ -109,10 +114,10 @@
                     </a>
                 </li> --}}
 
-                    <li class="sidebar-item {{ request()->segment(2) == 'pos' ? 'active' : '' }}">
-                        <a href="{{ url('/report/pos') }}" class='sidebar-link'>
+                    <li class="sidebar-item {{ request()->segment(1) == 'report' ? 'active' : '' }}">
+                        <a href="{{ url('/report') }}" class='sidebar-link'>
                             <i class="bi bi-clipboard-data"></i>
-                            <span> Laporan Penjualan </span>
+                            <span> Laporan Transaksi </span>
                         </a>
                     </li>
 

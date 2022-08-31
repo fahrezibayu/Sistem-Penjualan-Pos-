@@ -36,7 +36,7 @@
     var url_chart = "{{ url('dashboard/chart') }}";
     var Month = new Array();
     var Pendapatan = new Array();
-    const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni",
+    const monthNames = ["","Januari", "Februari", "Maret", "April", "Mei", "Juni",
         "Juli", "Augustus", "September", "Oktober", "November", "Desember"
     ];
     $.get(url_chart, function(response) {
@@ -64,7 +64,7 @@
             dataLabels: {
                 enabled: true,
                 formatter: function(val) {
-                    return "Rp" +val;
+                    return formatRupiah(`${val}`,"Rp");
                 },
                 offsetY: -15,
                 style: {
@@ -108,7 +108,7 @@
                 labels: {
                     show: false,
                     formatter: function(val) {
-                        return "Rp"+val;
+                        return formatRupiah(`${val}`,"Rp");
                     }
                 }
 

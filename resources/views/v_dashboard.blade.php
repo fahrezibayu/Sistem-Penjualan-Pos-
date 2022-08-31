@@ -3,6 +3,17 @@
 @section('title', 'Dashboard')
 
 @section('content')
+    <style>
+        .scrollabel {
+            overflow: scroll;
+            overflow-x: hidden;
+            overflow-y: visible;
+            height: 350px;
+        }
+        .scrollabel::-webkit-scrollbar {
+            width: 10px;
+        }
+    </style>
     <div class="row">
         <div class="col-12 col-lg-6">
 
@@ -101,12 +112,12 @@
                             <div class="card">
                                 <div class="card-body px-3 py-4-5">
                                     <div class="row">
-                                        <div class="col-4 col-md-3">
+                                        <div class="col-3 col-md-3">
                                             <div class="stats-icon purple">
                                                 <i class="fa fa-money"></i>
                                             </div>
                                         </div>
-                                        <div class="col-8 col-md-8">
+                                        <div class="col-9 col-md-9">
                                             <h6 class="text-muted font-semibold"> Penjualan </h6>
                                             <h6 class="font-extrabold mb-0"> Rp{{ singkat_angka($pos->pendapatan) }} </h6>
                                         </div>
@@ -135,45 +146,61 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-hover table-lg">
-                                <thead>
-                                    <tr>
-                                        <th>Rank</th>
-                                        <th>Nama Menu</th>
-                                        <th>Terjual</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    <tr>
-                                        <td class="col-auto">
-                                            <p class=" mb-0">
-                                                1
-                                            </p>
-                                        </td>
-                                        <td class="col-4">
-                                            <div class="d-flex align-items-center">
-                                                <div class="avatar avatar-lg">
-                                                    <img src='{{ asset('assets/images/product/BRG001.jpg') }}'
-                                                        alt='avtar img holder'>
+                            <ul class="list-group">
+                                <div class="scrollabel mt-1">
+                                    @foreach ($leadership as $row)
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <div class="d-flex">
+                                                    @if ($row->foto == null)
+                                                        <img src="https://ui-avatars.com/api?name={{ $row->nama_barang }}&color=FFF&background=6C757D"
+                                                            alt="" width="70px" height="70px;"
+                                                            style="border-radius:20px;">
+                                                    @else
+                                                        <img src="{{ asset('assets/images/product/') }}/{{ $row->foto }}"
+                                                            width="70px" height="70px;" style="border-radius:20px;"
+                                                            alt="">
+                                                    @endif
+                                                    <h6 style="margin-left: 10px;font-size: 14px" class="mt-3">
+                                                        {{ $row->nama_barang }} <br> <span style="font-size: 13px;"> Terjual {{ $row->total_penjualan }} </span> </h6>
                                                 </div>
-                                                <p class=" ms-3 mb-0">
-                                                    <b> Ayam Geprek Kremes </b>
-                                                </p>
                                             </div>
-                                        </td>
-                                        <td class="col-auto">
-                                            <p class=" mb-0"> 100 Terjual </p>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                            <div class="col-4">
+                                                @if ($row->number == 1)
+                                                    <i class="bi bi-trophy text-warning mt-4" style="float: right"></i>
+                                                @endif
+                                                @if ($row->number == 2)
+                                                    <i class="bi bi-trophy mt-4" style="color:silver;float: right"></i>
+                                                @endif
+                                                @if ($row->number == 3)
+                                                    <i class="bi bi-trophy mt-4" style="color:#bf8970;float: right"></i>
+                                                @endif
+                                                @if ($row->number > 3)
+                                                    {{ $row->number }}
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span> {{ $row->nama_barang }} </span>
+                                        <span> {{ $row->total_penjualan }} </span>
+                                        @if ($row->number == 1)
+                                            <i class="bi bi-trophy text-warning"></i>
+                                        @endif
+                                        @if ($row->number == 2)
+                                            <i class="bi bi-trophy" style="color:silver"></i>
+                                        @endif
+                                        @if ($row->number == 3)
+                                            <i class="bi bi-trophy" style="color:#bf8970"></i>
+                                        @endif
+                                    </li> --}}
+                                    @endforeach
+                                </div>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-
-    </div>
-    </section>
+        </section>
     </div>
 @endsection
